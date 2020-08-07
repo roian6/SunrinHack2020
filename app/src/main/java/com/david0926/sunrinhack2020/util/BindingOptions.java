@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.david0926.sunrinhack2020.R;
 import com.david0926.sunrinhack2020.adapter.ChatAdapter;
+import com.david0926.sunrinhack2020.adapter.DiaryAdapter;
 import com.david0926.sunrinhack2020.model.ChatModel;
+import com.david0926.sunrinhack2020.model.DiaryModel;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -33,6 +35,12 @@ public class BindingOptions {
     @BindingAdapter("chatItem")
     public static void bindChatItem(RecyclerView recyclerView, ObservableArrayList<ChatModel> items) {
         ChatAdapter adapter = (ChatAdapter) recyclerView.getAdapter();
+        if (adapter != null) adapter.setItem(items);
+    }
+
+    @BindingAdapter("diaryItem")
+    public static void bindDiaryItem(RecyclerView recyclerView, ObservableArrayList<DiaryModel> items) {
+        DiaryAdapter adapter = (DiaryAdapter) recyclerView.getAdapter();
         if (adapter != null) adapter.setItem(items);
     }
 
