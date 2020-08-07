@@ -59,6 +59,9 @@ public class MainFragment2 extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main2, container, false);
 
         binding.calendarView.setOnDayClickListener(eventDay -> {
+
+
+
             calendar = eventDay.getCalendar();
 
 //                day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -68,11 +71,6 @@ public class MainFragment2 extends Fragment {
             List<EventDay> events = new ArrayList<>();
             events.add(new EventDay(calendar, R.drawable.ic_baseline_devices_24, Color.parseColor("#228B22")));
             binding.calendarView.setEvents(events);
-
-
-
-
-
 
 
         });
