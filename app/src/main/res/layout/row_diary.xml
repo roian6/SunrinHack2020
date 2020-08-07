@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:background="@drawable/round_box"
+        android:background="@drawable/round_box_36"
         android:backgroundTint="@color/colorPrimary"
         android:elevation="4dp"
         android:paddingTop="16dp">
@@ -23,7 +23,7 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/apple_sd_gothic_neo_r"
+            android:fontFamily="@font/apple_sd_gothic_neo_h"
             android:text="@{item.time, default=`2020/08/08`}"
             android:textColor="@android:color/white"
             android:textSize="16sp"
@@ -36,8 +36,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@drawable/round_box"
-            android:padding="16dp"
+            android:background="@drawable/round_box_36"
+            android:padding="36dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3">
 
@@ -47,9 +47,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/apple_sd_gothic_neo_h"
+                android:gravity="center"
                 android:text="@{item.question, default=`Title`}"
                 android:textColor="@color/colorPrimary"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 app:layout_constrainedWidth="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -59,11 +60,11 @@
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="24dp"
                 android:fontFamily="@font/apple_sd_gothic_neo_r"
                 android:text="@{item.answer, default=`lorem ipsum`}"
-                android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
+                android:textColor="@color/materialGray6"
+                android:textSize="16sp"
                 app:layout_constrainedWidth="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -72,39 +73,25 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_diary"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="196dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="0dp"
                 app:layout_constrainedWidth="true"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView5">
 
                 <ImageView
-                    app:imageLink="@{item.image}"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_undraw_having_fun"
+                    android:layout_gravity="center"
+                    android:src="@drawable/logo"
+                    app:imageLink="@{item.image}"
                     app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
             </androidx.cardview.widget.CardView>
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/apple_sd_gothic_neo_r"
-                android:text="더보기"
-                android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/card_diary" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

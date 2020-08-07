@@ -10,7 +10,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/materialGray1"
+        android:background="@color/materialGray0"
         android:orientation="vertical"
         tools:context=".MainActivity">
 
@@ -58,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:elevation="4dp"
-            android:src="@drawable/ic_chat"
+            android:src="@drawable/chat_icon"
             app:backgroundTint="@color/colorPrimary"
             app:layout_anchor="@id/bottombar_main"
             app:rippleColor="@android:color/white"

@@ -51,8 +51,6 @@ public class ChatActivity extends AppCompatActivity {
     private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
     private StorageReference storageReference = firebaseStorage.getReference();
 
-    private BroadcastReceiver broadcastReceiver;
-
     private ActivityChatBinding binding;
 
     @Override
