@@ -26,4 +26,7 @@
         <item>12월</item>
     </array>
 
+    <string name="chat_chatting">챗봇과 대화를 나눠보세요!</string>
+    <string name="chat_not_chatting">먼저 대화 주제를 선택해 주세요!</string>
+
 </resources>

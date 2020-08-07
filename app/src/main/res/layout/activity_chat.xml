@@ -16,6 +16,14 @@
         <variable
             name="chatList"
             type="ObservableArrayList&lt;ChatModel&gt;" />
+
+        <variable
+            name="isChatting"
+            type="Boolean" />
+
+        <variable
+            name="imageUri"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -39,8 +47,9 @@
             android:id="@+id/recycler_chat"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
             app:chatItem="@{chatList}"
-            app:layout_constraintBottom_toTopOf="@+id/constraint_fab_bottom"
+            app:layout_constraintBottom_toTopOf="@+id/horizontalScrollView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar_chat"
@@ -48,37 +57,130 @@
 
         </androidx.recyclerview.widget.RecyclerView>
 
+        <HorizontalScrollView
+            android:id="@+id/horizontalScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:visibility="@{!isChatting}"
+            app:layout_constraintBottom_toTopOf="@+id/constraint_fab_bottom">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="8dp">
+
+                <TextView
+                    android:id="@+id/btn_chat_q1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/round_box_radius"
+                    android:fontFamily="@font/apple_sd_gothic_neo_r"
+                    android:padding="12dp"
+                    android:text="가장 기억에 남는 일은?"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/btn_chat_q2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/round_box_radius"
+                    android:fontFamily="@font/apple_sd_gothic_neo_r"
+                    android:padding="12dp"
+                    android:text="오늘 먹은 음식은?"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/btn_chat_q3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/round_box_radius"
+                    android:fontFamily="@font/apple_sd_gothic_neo_r"
+                    android:padding="12dp"
+                    android:text="기분이 좋았던 일은?"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/btn_chat_q4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/round_box_radius"
+                    android:fontFamily="@font/apple_sd_gothic_neo_r"
+                    android:padding="12dp"
+                    android:text="하고 싶은 말이 있다면?"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+
+        </HorizontalScrollView>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_fab_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp"
+            android:paddingHorizontal="12dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
+            <ImageView
+                android:id="@+id/btn_chat_image"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:background="@drawable/circle"
+                android:backgroundTint="@color/colorPrimary"
+                android:padding="4dp"
+                android:src="@{imageUri.empty?@drawable/ic_baseline_add_24:@drawable/ic_baseline_check_24, default=@drawable/ic_baseline_add_24}"
+                android:tint="@android:color/white"
+                app:buttonEnabled="@{isChatting}"
+                app:layout_constraintBottom_toBottomOf="@+id/edt_chat_message"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/edt_chat_message" />
+
             <EditText
-                android:text="@={message}"
                 android:id="@+id/edt_chat_message"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/round_box"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/round_box_right"
                 android:backgroundTint="@color/materialGray1"
+                android:focusable="@{isChatting}"
                 android:fontFamily="@font/apple_sd_gothic_neo_r"
-                android:hint="챗봇과 대화를 나눠보세요!"
-                android:padding="16dp"
+                android:hint="@{isChatting?@string/chat_chatting:@string/chat_not_chatting, default=`Aa`}"
+                android:padding="14dp"
+                android:singleLine="true"
+                android:text="@={message}"
                 android:textColorHint="@color/materialGray5"
                 android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btn_chat_send"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btn_chat_image"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_chat_send"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/round_box"
+                android:layout_height="0dp"
+                android:background="@drawable/round_box_left"
                 android:backgroundTint="@color/colorPrimary"
                 android:fontFamily="@font/apple_sd_gothic_neo_h"
                 android:gravity="center"
@@ -87,10 +189,21 @@
                 android:padding="14dp"
                 android:text="전송"
                 android:textColor="@android:color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:buttonEnabled="@{isChatting}"
+                app:layout_constraintBottom_toBottomOf="@+id/edt_chat_message"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.571" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            android:id="@+id/img_chat_holder"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

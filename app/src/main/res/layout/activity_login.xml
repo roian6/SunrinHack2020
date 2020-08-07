@@ -173,6 +173,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_marginTop="8dp"
                     android:id="@+id/btn_login_regi"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
