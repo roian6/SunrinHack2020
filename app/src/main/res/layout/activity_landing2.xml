@@ -6,54 +6,85 @@
     android:background="@android:color/white"
     android:orientation="vertical">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ImageView
+        android:layout_width="68dp"
+        android:layout_height="68dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintVertical_bias="0.307"
+        android:src="@drawable/logo"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintVertical_bias="0.469"
+        android:text="그럴땐, TextToday를 사용해 써보세요"
+        android:textColor="@color/colorPrimary"
+        android:textSize="17sp"
+        android:fontFamily="@font/apple_sd_gothic_neo_h"
+        />
+
+    <TextView
+        android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintVertical_bias="0.562"
+        android:layout_marginHorizontal="100dp"
+        android:textSize="11sp"
+        android:textColor="@color/colorPrimary"
+        android:text="어렵고 형식적인 다이어리 대신,"
+        android:gravity="center"/>
 
-        <ImageView
-            android:src="@drawable/ic_undraw_segmentation"
-            android:id="@+id/imageView2"
-            android:layout_width="match_parent"
-            android:layout_height="244dp"
-            android:layout_marginHorizontal="24dp"
-            android:paddingHorizontal="36dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/text3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        app:layout_constraintTop_toBottomOf="@id/text"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginHorizontal="100dp"
+        android:textSize="11sp"
+        android:textColor="@color/colorPrimary"
+        android:text="TexToday로 문자 메시지를 보내듯"
+        android:gravity="center"/>
+    <TextView
+        android:id="@+id/text4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        app:layout_constraintTop_toBottomOf="@id/text3"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginHorizontal="100dp"
+        android:textSize="11sp"
+        android:textColor="@color/colorPrimary"
+        android:text="간단하고 편리한 사용법으로"
+        android:gravity="center"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        app:layout_constraintTop_toBottomOf="@id/text4"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginHorizontal="100dp"
+        android:textSize="11sp"
+        android:textColor="@color/colorPrimary"
+        android:text="다이어리를 작성해보세요"
+        android:gravity="center"/>
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
-            android:fontFamily="@font/apple_sd_gothic_neo_h"
-            android:text="한눈에 보는 통계"
-            android:textColor="@color/materialGray7"
-            android:textSize="28sp"
-            app:layout_constraintEnd_toEndOf="@+id/imageView2"
-            app:layout_constraintStart_toStartOf="@+id/imageView2"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/apple_sd_gothic_neo_r"
-            android:gravity="center"
-            android:text="앱에서는 주간/월간 사용량 통계와 \n알림 횟수 등을 한눈에 볼 수 있어요."
-            android:textColor="@color/materialGray7"
-            android:textSize="18sp"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

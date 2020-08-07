@@ -46,6 +46,9 @@
             android:name=".LandingActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+        <receiver android:name=".Alarm"></receiver>
+        <receiver android:name=".broadcast"></receiver>
     </application>
+
 
 </manifest>

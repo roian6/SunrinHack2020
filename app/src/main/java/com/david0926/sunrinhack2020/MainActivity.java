@@ -4,7 +4,9 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -22,28 +24,63 @@ import java.util.Calendar;
 public class MainActivity extends AppCompatActivity {
 
     private AlarmManager alarmManager;
-    private int hour = 21, minute = 0;
+    private String hour, minute;
     private ActivityMainBinding binding;
+    private int alarm_time_hour,alarm_time_minute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-
         Intent intent = new Intent(getApplicationContext(), Alarm.class);
         PendingIntent pIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, 0);
 
-        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        SharedPreferences pref = getSharedPreferences("alarm_time",MODE_PRIVATE);
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, hour);
-        calendar.set(Calendar.MINUTE, minute);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
+        Intent intent1 = getIntent();
 
-        // 지정한 시간에 매일 알림
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pIntent);
+        if (intent1.getIntExtra("check",1)==0){
+            alarmManager.cancel(pIntent);
+        }
+        if (pref.getString("alarm_time_hour",null)!=null){
+
+            hour = pref.getString("alarm_time_hour",null);
+            minute = pref.getString("alarm_time_minute",null);
+
+            alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+            alarm_time_hour = Integer.parseInt(hour);
+            alarm_time_minute = Integer.parseInt(minute);
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY, alarm_time_hour);
+            calendar.set(Calendar.MINUTE, alarm_time_minute);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+
+            // 지정한 시간에 매일 알림
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pIntent);
+
+        }
+
+        if(intent1.getStringExtra("alarm_time_hour")!=null&&intent1.getStringExtra("alarm_time_minute")!=null){
+
+            hour = intent1.getStringExtra("alarm_time_hour");
+            minute = intent1.getStringExtra("alarm_time_minute");
+            alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hour));
+            calendar.set(Calendar.MINUTE, Integer.parseInt(minute));
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+
+            // 지정한 시간에 매일 알림
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pIntent);
+
+        }
+
 
         binding.fabMain.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, ChatActivity.class)));
 
