@@ -43,6 +43,9 @@
             android:outAnimation="@android:anim/fade_out">
 
             <!--Before Sign up-->
+
+
+            <!--After Sign up-->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -87,13 +90,13 @@
                         android:layout_height="50dp"
                         android:layout_marginHorizontal="24dp"
                         android:background="@drawable/round_box"
-                        android:fontFamily="@font/productr"
+                        android:fontFamily="@font/apple_sd_gothic_neo_r"
                         android:hint="이름을 입력해주세요"
                         android:importantForAutofill="no"
                         android:inputType="text"
                         android:maxLength="10"
                         android:maxLines="1"
-                        android:paddingLeft="85dp"
+                        android:paddingStart="85dp"
                         android:text="@={name}"
                         android:textColorHint="@color/materialGray5"
                         android:textSize="16sp"
@@ -102,13 +105,14 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
+                        android:fontFamily="@font/apple_sd_gothic_neo_h"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
                         android:text="NAME"
                         android:textColor="@color/colorPrimary"
                         app:layout_constraintBottom_toBottomOf="@id/edit_regi_name"
-                        app:layout_constraintLeft_toLeftOf="@id/edit_regi_name"
+                        app:layout_constraintStart_toStartOf="@id/edit_regi_name"
                         app:layout_constraintTop_toTopOf="@id/edit_regi_name" />
 
 
@@ -119,13 +123,13 @@
                         android:layout_marginHorizontal="24dp"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/round_box"
-                        android:fontFamily="@font/productr"
+                        android:fontFamily="@font/apple_sd_gothic_neo_r"
                         android:hint="이메일을 입력해주세요"
                         android:importantForAutofill="no"
                         android:inputType="textEmailAddress"
                         android:maxLength="50"
                         android:maxLines="1"
-                        android:paddingLeft="85dp"
+                        android:paddingStart="85dp"
                         android:text="@={email}"
                         android:textColorHint="@color/materialGray5"
                         android:textSize="16sp"
@@ -134,13 +138,14 @@
                         app:layout_constraintTop_toBottomOf="@+id/edit_regi_name" />
 
                     <TextView
+                        android:fontFamily="@font/apple_sd_gothic_neo_h"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
                         android:text="E-MAIL"
                         android:textColor="@color/colorPrimary"
                         app:layout_constraintBottom_toBottomOf="@id/edit_regi_email"
-                        app:layout_constraintLeft_toLeftOf="@id/edit_regi_email"
+                        app:layout_constraintStart_toStartOf="@id/edit_regi_email"
                         app:layout_constraintTop_toTopOf="@id/edit_regi_email" />
 
 
@@ -151,11 +156,11 @@
                         android:layout_marginHorizontal="24dp"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/round_box"
-                        android:fontFamily="@font/productr"
+                        android:fontFamily="@font/apple_sd_gothic_neo_r"
                         android:hint="비밀번호를 입력하세요"
                         android:importantForAutofill="no"
                         android:inputType="textPassword"
-                        android:paddingLeft="85dp"
+                        android:paddingStart="85dp"
                         android:text="@={pw}"
                         android:textColorHint="@color/materialGray5"
                         android:textSize="16sp"
@@ -164,13 +169,14 @@
                         app:layout_constraintTop_toBottomOf="@+id/edit_regi_email" />
 
                     <TextView
+                        android:fontFamily="@font/apple_sd_gothic_neo_h"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
                         android:text="PW"
                         android:textColor="@color/colorPrimary"
                         app:layout_constraintBottom_toBottomOf="@id/edit_regi_pw"
-                        app:layout_constraintLeft_toLeftOf="@id/edit_regi_pw"
+                        app:layout_constraintStart_toStartOf="@id/edit_regi_pw"
                         app:layout_constraintTop_toTopOf="@id/edit_regi_pw" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -222,7 +228,7 @@
                         android:fontFamily="@font/apple_sd_gothic_neo_h"
                         android:text="회원가입"
                         android:textColor="@android:color/white"
-                        android:textSize="14sp"
+                        android:textSize="16sp"
                         android:visibility="@{!onProgress}" />
 
                 </LinearLayout>
@@ -230,8 +236,6 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-            <!--After Sign up-->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
