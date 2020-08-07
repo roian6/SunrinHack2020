@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="selected"
+            type="String" />
+
+    </data>
+
+    <com.allattentionhere.fabulousfilter.AAH_FilterView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/relative_fab_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/round_box_top"
+            android:visibility="invisible"
+            tools:visibility="visible">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <View
+                    android:id="@+id/view_fab_dot"
+                    android:layout_width="36dp"
+                    android:layout_height="6dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/round_box"
+                    android:backgroundTint="@color/materialGray4"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view_fab_dot">
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraint_fab_bottom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <EditText
+                            android:id="@+id/edit_login_email"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:background="@drawable/round_box"
+                            android:backgroundTint="@color/materialGray1"
+                            android:fontFamily="@font/apple_sd_gothic_neo_r"
+                            android:hint="챗봇과 대화를 나눠보세요!"
+                            android:padding="16dp"
+                            android:textColorHint="@color/materialGray5"
+                            android:textSize="16sp"
+                            app:layout_constraintEnd_toStartOf="@+id/btn_fragfab_upload"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btn_fragfab_upload"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/round_box"
+                            android:backgroundTint="@color/colorPrimary"
+                            android:fontFamily="@font/apple_sd_gothic_neo_h"
+                            android:gravity="center"
+                            android:minWidth="0dp"
+                            android:minHeight="0dp"
+                            android:padding="14dp"
+                            android:text="전송"
+                            android:textColor="@android:color/white"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </RelativeLayout>
+
+    </com.allattentionhere.fabulousfilter.AAH_FilterView>
+</layout>

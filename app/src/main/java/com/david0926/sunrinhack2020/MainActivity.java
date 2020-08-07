@@ -1,5 +1,11 @@
 package com.david0926.sunrinhack2020;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,11 +14,16 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.david0926.sunrinhack2020.databinding.ActivityMainBinding;
+import com.david0926.sunrinhack2020.fragment.FabFragment;
 import com.david0926.sunrinhack2020.fragment.MainFragment1;
 import com.david0926.sunrinhack2020.fragment.MainFragment2;
 import com.david0926.sunrinhack2020.fragment.MainFragment3;
+import com.david0926.sunrinhack2020.fragment.MainFragment4;
+import com.google.android.material.bottomappbar.BottomAppBar;
 
 public class MainActivity extends AppCompatActivity {
+
+    private BroadcastReceiver broadcastReceiver;
 
     private ActivityMainBinding binding;
 
@@ -21,7 +32,30 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        binding.bottomMain.setOnNavigationItemSelectedListener(item -> {
+        binding.fabMain.setColorFilter(Color.WHITE);
+        binding.fabMain.setOnClickListener(view -> {
+            binding.fabMain.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
+            binding.fabMain.setColorFilter(getColor(R.color.colorPrimary));
+            FabFragment fabFragment = FabFragment.newInstance();
+            fabFragment.setParentFab(binding.fabMain);
+            fabFragment.show(getSupportFragmentManager(), fabFragment.getTag());
+        });
+
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context arg0, Intent intent) {
+                String action = intent.getAction();
+                if (action != null && action.equals("invalidate_fab")) {
+                    binding.fabMain.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.colorPrimary)));
+                    binding.fabMain.setColorFilter(Color.WHITE);
+                    binding.bottombarMain.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);
+                    binding.bottombarMain.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
+                }
+            }
+        };
+        registerReceiver(broadcastReceiver, new IntentFilter("invalidate_fab"));
+
+        binding.bottomnavMain.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.action_1:
                     switchFragment(MainFragment1.newInstance());
@@ -31,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.action_3:
                     switchFragment(MainFragment3.newInstance());
+                    break;
+                case R.id.action_4:
+                    switchFragment(MainFragment4.newInstance());
                     break;
             }
             return true;
@@ -42,5 +79,11 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_main, fragment);
         transaction.commit();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 }

@@ -19,7 +19,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:title="More"
+            app:title="Profile"
             app:titleTextAppearance="@style/TitleBarTextAppearance"
             app:titleTextColor="@color/materialDarkBlack" />
 
@@ -170,7 +170,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_main3_logout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -180,9 +180,9 @@
             android:fontFamily="@font/productb"
             android:text="Logout"
             android:textColor="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_main3_share" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

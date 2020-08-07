@@ -11,6 +11,16 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="MaterialTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
+        <item name="android:ambientShadowAlpha">0.05</item>
+        <item name="android:spotShadowAlpha">0.05</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
     <style name="BottomNavigationTheme" parent="Theme.AppCompat.Light">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="android:colorForeground">@color/materialGray6</item>

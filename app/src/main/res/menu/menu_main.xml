@@ -3,14 +3,27 @@
 
     <item
         android:id="@+id/action_1"
-        android:icon="@drawable/ic_baseline_devices_24"
-        android:title="My Device" />
+        android:icon="@drawable/ic_baseline_menu_book_24"
+        android:title="내 일기" />
     <item
         android:id="@+id/action_2"
-        android:icon="@drawable/ic_baseline_bar_chart_24"
-        android:title="Analytics" />
+        android:icon="@drawable/ic_baseline_calendar_today_24"
+        android:title="캘린더" />
+
+    <!--wow-->
+    <item
+        android:id="@+id/action_blank"
+        android:checkable="false"
+        android:checked="false"
+        android:enabled="false"
+        android:title=""/>
+
     <item
         android:id="@+id/action_3"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="프로필" />
+    <item
+        android:id="@+id/action_4"
         android:icon="@drawable/ic_baseline_more_horiz_24"
-        android:title="More" />
+        android:title="더보기" />
 </menu>
