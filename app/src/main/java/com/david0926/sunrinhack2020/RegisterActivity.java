@@ -29,7 +29,9 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -113,11 +115,13 @@ public class RegisterActivity extends AppCompatActivity {
                             .getDownloadUrl()
                             .addOnSuccessListener(uri -> {
 
+                                ArrayList<HashMap<String, String>> list = new ArrayList<>();
+
                                 //3. firestore (upload user information)
                                 firebaseFirestore
                                         .collection("users")
                                         .document(email)
-                                        .set(new UserModel(name, email, timeNow(), uri.toString()))
+                                        .set(new UserModel(name, email, timeNow(), uri.toString(), list))
                                         .addOnSuccessListener(runnable -> {
 
                                             //4. firebase auth (create user)

@@ -44,9 +44,6 @@ public class MainFragment2 extends Fragment {
         return new MainFragment2();
     }
 
-    private BroadcastReceiver broadcastReceiverAlert;
-    private BroadcastReceiver broadcastReceiverTime;
-
     private Context mContext;
     private FragmentMain2Binding binding;
 
@@ -61,35 +58,19 @@ public class MainFragment2 extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main2, container, false);
 
-
-
-        binding.calendarView.setOnDayClickListener(new OnDayClickListener() {
-            @Override
-            public void onDayClick(EventDay eventDay) {
-                calendar = eventDay.getCalendar();
+        binding.calendarView.setOnDayClickListener(eventDay -> {
+            calendar = eventDay.getCalendar();
 
 //                day = calendar.get(Calendar.DAY_OF_MONTH);
 //                month = calendar.get(Calendar.MONTH)+1;
 //                year = calendar.get(Calendar.YEAR);
 
-                List<EventDay> events = new ArrayList<>();
-                events.add(new EventDay(calendar, R.drawable.ic_baseline_devices_24, Color.parseColor("#228B22")));
-                binding.calendarView.setEvents(events);
+            List<EventDay> events = new ArrayList<>();
+            events.add(new EventDay(calendar, R.drawable.ic_baseline_devices_24, Color.parseColor("#228B22")));
+            binding.calendarView.setEvents(events);
 
-            }
         });
 
-
-
-
-
         return binding.getRoot();
-    }
-
-    @Override
-    public void onDestroy() {
-        mContext.unregisterReceiver(broadcastReceiverAlert);
-        mContext.unregisterReceiver(broadcastReceiverTime);
-        super.onDestroy();
     }
 }
