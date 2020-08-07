@@ -89,9 +89,6 @@ public class RegisterActivity extends AppCompatActivity {
             else if (!isValidPw(binding.getPw())) //invalid password
                 showErrorMsg("Please enter a valid password. (6~24 letters, 0-9 + A-z)");
 
-            else if (!binding.getPw().equals(binding.getPwcheck())) //password confirm failed
-                showErrorMsg("Please enter same password in both fields.");
-
             else if (binding.imgRegiProfile.getDrawable() == null) //profile image not uploaded
                 showErrorMsg("Please upload your profile image.");
 
@@ -182,7 +179,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void setProfileImage(Uri uri) {
         if (getMimeType(uri).equals("image/jpeg") || getMimeType(uri).equals("image/png")) {
-            binding.lottieRegiProfile.setVisibility(View.GONE);
             Glide.with(this).load(uri).into(binding.imgRegiProfile);
         } else showErrorMsg("Please upload valid profile image. (jpeg, png)");
     }

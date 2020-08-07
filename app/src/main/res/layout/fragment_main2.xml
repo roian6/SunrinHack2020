@@ -46,10 +46,5 @@
             app:eventsEnabled="true"
             />
 
-
-
-
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

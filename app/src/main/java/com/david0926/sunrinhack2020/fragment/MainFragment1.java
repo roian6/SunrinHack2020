@@ -14,6 +14,8 @@ import androidx.fragment.app.Fragment;
 import com.david0926.sunrinhack2020.R;
 import com.david0926.sunrinhack2020.databinding.FragmentMain1Binding;
 import com.david0926.sunrinhack2020.util.UserCache;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -25,6 +27,7 @@ public class MainFragment1 extends Fragment {
 
     private Context mContext;
     private FragmentMain1Binding binding;
+    private String date;
 
     private MainFragment1() {
     }
@@ -39,6 +42,9 @@ public class MainFragment1 extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main1, container, false);
+
+
+
 
         return binding.getRoot();
     }
