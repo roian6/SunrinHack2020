@@ -1,11 +1,14 @@
 package com.david0926.sunrinhack2020;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,16 +24,39 @@ import com.david0926.sunrinhack2020.fragment.MainFragment3;
 import com.david0926.sunrinhack2020.fragment.MainFragment4;
 import com.google.android.material.bottomappbar.BottomAppBar;
 
+import java.util.Calendar;
+
 public class MainActivity extends AppCompatActivity {
 
     private BroadcastReceiver broadcastReceiver;
 
+    private AlarmManager alarmManager;
+    private int hour=21, minute=0;
     private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+
+        Intent intent = new Intent(getApplicationContext(), Alarm.class);
+        PendingIntent pIntent = PendingIntent.getBroadcast(getApplicationContext(), 0,intent, 0);
+
+        alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        // 지정한 시간에 매일 알림
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),  AlarmManager.INTERVAL_DAY, pIntent);
+
+
+
+
 
         binding.fabMain.setColorFilter(Color.WHITE);
         binding.fabMain.setOnClickListener(view -> {
