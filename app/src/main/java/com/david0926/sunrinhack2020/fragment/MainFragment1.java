@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import com.david0926.sunrinhack2020.R;
 import com.david0926.sunrinhack2020.databinding.FragmentMain1Binding;
+import com.david0926.sunrinhack2020.util.UserCache;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -38,6 +39,7 @@ public class MainFragment1 extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main1, container, false);
+        binding.setUser(UserCache.getUser(mContext));
 
         return binding.getRoot();
     }

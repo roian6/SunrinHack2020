@@ -21,6 +21,7 @@ import com.david0926.sunrinhack2020.databinding.FragmentMain3Binding;
 import com.david0926.sunrinhack2020.model.UserModel;
 import com.david0926.sunrinhack2020.util.UserCache;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.auth.User;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -65,6 +66,7 @@ public class MainFragment3 extends Fragment {
         });
 
         binding.btnMain3Logout.setOnClickListener(view -> {
+            UserCache.clear(mContext);
             Activity activity = getActivity();
             if (activity == null) return;
             FirebaseAuth.getInstance().signOut();

@@ -1,29 +1,40 @@
 package com.david0926.sunrinhack2020;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.MimeTypeMap;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.bumptech.glide.Glide;
 import com.david0926.sunrinhack2020.databinding.ActivityRegisterBinding;
 import com.david0926.sunrinhack2020.model.UserModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import gun0912.tedimagepicker.builder.TedImagePicker;
 import gun0912.tedkeyboardobserver.TedKeyboardObserver;
 
 
@@ -31,6 +42,9 @@ public class RegisterActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+
+    private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+    private StorageReference storageReference = firebaseStorage.getReference();
 
     private ActivityRegisterBinding binding;
 
@@ -45,6 +59,18 @@ public class RegisterActivity extends AppCompatActivity {
         //scroll to bottom when keyboard up
         new TedKeyboardObserver(this).listen(isShow -> {
             binding.scrollRegi.smoothScrollTo(0, binding.scrollRegi.getBottom());
+        });
+
+        //profile edit button clicked
+        binding.imgRegiEditprofile.setOnClickListener(view -> {
+
+            //start image picker
+            TedImagePicker
+                    .with(this)
+                    .showTitle(false)
+                    .startAnimation(R.anim.slide_up, R.anim.slide_up_before)
+                    .finishAnimation(R.anim.slide_down_before, R.anim.slide_down)
+                    .start(this::setProfileImage);
         });
 
         //sign up button clicked
@@ -66,26 +92,47 @@ public class RegisterActivity extends AppCompatActivity {
             else if (!binding.getPw().equals(binding.getPwcheck())) //password confirm failed
                 showErrorMsg("Please enter same password in both fields.");
 
+            else if (binding.imgRegiProfile.getDrawable() == null) //profile image not uploaded
+                showErrorMsg("Please upload your profile image.");
+
             else //confirm success
-                createAccount(binding.getName(), binding.getEmail(), binding.getPw());
+                createAccount(imageToByte(binding.imgRegiProfile.getDrawable()), binding.getName(), binding.getEmail(), binding.getPw());
 
         });
 
     }
 
-    private void createAccount(String name, String email, String pw) {
+    private void createAccount(byte[] profile, String name, String email, String pw) {
 
-        //1. firestore (upload user information)
-        firebaseFirestore
-                .collection("users")
-                .document(email)
-                .set(new UserModel(name, email, timeNow()))
-                .addOnSuccessListener(runnable -> {
-                    //2. firebase auth (create user)
-                    firebaseAuth
-                            .createUserWithEmailAndPassword(email, pw)
-                            .addOnSuccessListener(runnable1 -> finishSignUp())
-                            .addOnFailureListener(this, e -> showErrorMsg(e.getLocalizedMessage()));
+
+        //1. firebase storage (upload profile image)
+        storageReference
+                .child("profile/" + email + ".png")
+                .putBytes(profile)
+                .addOnSuccessListener(runnable1 -> {
+
+                    //2. get profile url
+                    storageReference.child("profile/" + email + ".png")
+                            .getDownloadUrl()
+                            .addOnSuccessListener(uri -> {
+
+                                //3. firestore (upload user information)
+                                firebaseFirestore
+                                        .collection("users")
+                                        .document(email)
+                                        .set(new UserModel(name, email, timeNow(), uri.toString()))
+                                        .addOnSuccessListener(runnable -> {
+
+                                            //4. firebase auth (create user)
+                                            firebaseAuth
+                                                    .createUserWithEmailAndPassword(email, pw)
+                                                    .addOnSuccessListener(runnable2 -> finishSignUp())
+                                                    .addOnFailureListener(this, e -> showErrorMsg(e.getLocalizedMessage()));
+                                        })
+                                        .addOnFailureListener(e -> showErrorMsg(e.getLocalizedMessage()));
+
+                            })
+                            .addOnFailureListener(e -> showErrorMsg(e.getLocalizedMessage()));
                 })
                 .addOnFailureListener(e -> showErrorMsg(e.getLocalizedMessage()));
     }
@@ -131,6 +178,37 @@ public class RegisterActivity extends AppCompatActivity {
 
     private String timeNow() {
         return new SimpleDateFormat("yyyy/MM/dd hh:mm aa", Locale.ENGLISH).format(new Date());
+    }
+
+    private void setProfileImage(Uri uri) {
+        if (getMimeType(uri).equals("image/jpeg") || getMimeType(uri).equals("image/png")) {
+            binding.lottieRegiProfile.setVisibility(View.GONE);
+            Glide.with(this).load(uri).into(binding.imgRegiProfile);
+        } else showErrorMsg("Please upload valid profile image. (jpeg, png)");
+    }
+
+    public String getMimeType(Uri uri) {
+
+        String mimeType;
+        if (uri.getScheme() != null && uri.getScheme().equals(ContentResolver.SCHEME_CONTENT)) {
+            ContentResolver cr = this.getContentResolver();
+            mimeType = cr.getType(uri);
+        } else {
+            String fileExtension = MimeTypeMap.getFileExtensionFromUrl(uri
+                    .toString());
+            mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(
+                    fileExtension.toLowerCase());
+        }
+        return mimeType;
+    }
+
+    private byte[] imageToByte(Drawable drawable) {
+
+        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 10, outputStream);
+
+        return outputStream.toByteArray();
     }
 
     @Override

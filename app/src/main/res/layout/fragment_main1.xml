@@ -24,6 +24,10 @@
             name="time"
             type="String" />
 
+        <variable
+            name="user"
+            type="com.david0926.sunrinhack2020.model.UserModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -144,6 +148,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
+                app:imageLink="@{user.profile}"
                 android:layout_width="96dp"
                 android:layout_height="96dp"
                 android:src="@drawable/ic_undraw_online_test"

@@ -49,7 +49,6 @@ public class LoginActivity extends AppCompatActivity {
         if (FirebaseAuth.getInstance().getCurrentUser() != null && UserCache.getUser(this) != null)
             finishSignIn();
 
-
         //sign in button clicked
         binding.btnLoginSignin.setOnClickListener(view -> {
 

@@ -25,4 +25,8 @@ public class UserCache {
         Gson gson = new Gson();
         return gson.fromJson(getSharedPreferences(context).getString("user_json", ""), UserModel.class);
     }
+
+    public static void clear(Context context) {
+        SharedPreferenceUtil.putString(context,"user_json", null);
+    }
 }
