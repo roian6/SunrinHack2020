@@ -1,5 +1,7 @@
 package com.david0926.sunrinhack2020;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +9,7 @@ import android.content.IntentFilter;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -21,16 +24,31 @@ import com.david0926.sunrinhack2020.fragment.MainFragment3;
 import com.david0926.sunrinhack2020.fragment.MainFragment4;
 import com.google.android.material.bottomappbar.BottomAppBar;
 
+import java.util.Calendar;
+
 public class MainActivity extends AppCompatActivity {
 
     private BroadcastReceiver broadcastReceiver;
 
     private ActivityMainBinding binding;
+    private AlarmManager alarmManager;
+    private int hour=21, minute=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+        Intent intent = new Intent(getApplicationContext(), Alarm.class);
+        PendingIntent pIntent = PendingIntent.getBroadcast(getApplicationContext(), 0,intent, 0);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),  AlarmManager.INTERVAL_DAY, pIntent);
 
         binding.fabMain.setColorFilter(Color.WHITE);
         binding.fabMain.setOnClickListener(view -> {
