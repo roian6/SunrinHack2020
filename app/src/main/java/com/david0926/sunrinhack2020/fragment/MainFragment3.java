@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,10 @@ import com.google.firebase.firestore.auth.User;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class MainFragment3 extends Fragment {
 
     public static MainFragment3 newInstance() {
@@ -33,7 +38,8 @@ public class MainFragment3 extends Fragment {
 
     private Context mContext;
     private FragmentMain3Binding binding;
-
+    String during_day;
+    String now_day;
     @Override
     public void onAttach(@NotNull Context context) {
         super.onAttach(context);
@@ -46,7 +52,54 @@ public class MainFragment3 extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main3, container, false);
 
 
+        UserModel userModel = UserCache.getUser(mContext);
+        binding.setUser(userModel);
+        binding.setUsername(userModel.getName());
+        binding.setUseremail(userModel.getEmail());
+
+        int a = userModel.getChat().size()/2;
+
+
+        now_day = a+"";
+        if (now_day != null){
+            binding.setNowduringday(now_day+"편 작성했어");
+        }
+
+        long now = System.currentTimeMillis();
+        Date mDate = new Date(now);
+        SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy/MM/dd");
+        String getTime = simpleDate.format(mDate);
+        during_day = calDateBetweenAandB(getTime,userModel.getTime());
+        binding.setDuringdaytext(during_day+"일째");
+
+
         return binding.getRoot();
+    }
+
+
+
+    public static String calDateBetweenAandB(String date1 ,String date2)
+    {
+        try{
+            SimpleDateFormat format = new SimpleDateFormat("yyyy/mm/dd");
+            Date FirstDate = format.parse(date1);
+            Date SecondDate = format.parse(date2);
+
+            long calDate = FirstDate.getTime() - SecondDate.getTime();
+
+            long calDateDays = calDate / ( 24*60*60*1000);
+
+            calDateDays = Math.abs(calDateDays);
+
+            String calDateDaysString = calDateDays+"";
+
+            return calDateDaysString;
+
+        }
+        catch(ParseException e)
+        {
+            return null;
+        }
     }
 }
 

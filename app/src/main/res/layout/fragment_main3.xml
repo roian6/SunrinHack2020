@@ -3,13 +3,39 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        
+        <variable
+            name="username"
+            type="String" />
+        <variable
+            name="useremail"
+            type="String" />
+        <variable
+            name="duringday"
+            type="String" />
+
+        <variable
+            name="duringdaytext"
+            type="String" />
+
+        <variable
+            name="nowduringday"
+            type="String" />
+
+        <variable
+            name="nowduringdaydiary"
+            type="String" />
+        <variable
+            name="user"
+            type="com.david0926.sunrinhack2020.model.UserModel" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="#fafafa">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_main3"
@@ -22,6 +48,130 @@
             app:title="Profile"
             app:titleTextAppearance="@style/TitleBarTextAppearance"
             app:titleTextColor="@color/materialDarkBlack" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/user_profile"
+            android:layout_width="144dp"
+            android:layout_height="144dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintVertical_bias="0.15"
+            app:imageLink="@{user.profile}"
+            />
+
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/user_profile"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="@{username,default = `김나현`}"
+            android:textSize="26sp"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginTop="12dp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/user_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/user_name"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="@{useremail,default = `whynxt@naver.com`}"
+            android:textColor="@color/colorPrimary"
+            />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fragment3_layout_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="3dp"
+            app:layout_constraintTop_toBottomOf="@id/user_email"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:padding="16dp"
+            android:background="@drawable/round_box"
+            android:layout_marginTop="25dp"
+            android:layout_marginHorizontal="44dp"
+            >
+            <TextView
+                android:id="@+id/fragment3_during_day_tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="일기를 작성한지"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:textColor="#9a9a9a"
+                />
+            
+            <TextView
+                android:id="@+id/fragment3_during_day_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/fragment3_during_day_tv1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="8dp"
+                android:textSize="30sp"
+                android:text="@{duringdaytext,default = `0일째`}"
+                android:textColor="@color/colorPrimary"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/fragment3_during_day_tv"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="3dp"
+                android:textSize="12sp"
+                android:textColor="#709a9a9a"
+                android:text="@{duringday,default=`0000.00.00~`}"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fragment3_layout_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="41dp"
+            app:layout_constraintTop_toBottomOf="@id/fragment3_layout_1"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/round_box"
+            android:padding="16dp"
+            android:elevation="3dp"
+            >
+            <TextView
+                android:id="@+id/fragment3_nowduring_day_tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="지금까지 일기를"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:textColor="#9a9a9a"
+                android:paddingBottom="10dp"
+                />
+
+            <TextView
+                android:id="@+id/fragment3_nowduring_day_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/fragment3_nowduring_day_tv1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="8dp"
+                android:textSize="30sp"
+                android:text="@{nowduringday,default = `0편 작성했어`}"
+                android:textColor="@color/colorPrimary"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
