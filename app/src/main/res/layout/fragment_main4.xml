@@ -5,183 +5,190 @@
     <data>
 
         <variable
-            name="settinguser"
+            name="user"
             type="com.david0926.sunrinhack2020.model.UserModel" />
-        <variable
-            name="settingusername"
-            type="String" />
-        <variable
-            name="settinguseremail"
-            type="String" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:backgroundTint="@color/materialGray0"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/setting_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintVertical_bias="0.08"
-            app:layout_constraintHorizontal_bias="0.1"
-            android:text="회원정보"
-            android:textStyle="bold"
-            android:textSize="26sp"
+            android:text="회원 정보"
             android:textColor="@color/colorPrimary"
-            />
-        
+            android:textSize="26sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.08" />
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/setting_profile"
             android:layout_width="63dp"
             android:layout_height="63dp"
-            app:layout_constraintLeft_toLeftOf="@id/setting_tv"
-            app:layout_constraintTop_toBottomOf="@id/setting_tv"
             android:layout_marginTop="17dp"
-            imageLink="@{settinguser.profile}"
-            />
-        
+            app:imageLink="@{user.profile}"
+            app:layout_constraintStart_toStartOf="@id/setting_tv"
+            app:layout_constraintTop_toBottomOf="@id/setting_tv" />
+
         <TextView
             android:id="@+id/setting_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@id/setting_profile"
-            app:layout_constraintTop_toTopOf="@id/setting_profile"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginLeft="15dp"
-            android:text="@{settingusername,default = `김나현`}"
-            android:textSize="17sp"/>
+            android:fontFamily="@font/apple_sd_gothic_neo_h"
+            android:text="@{user.name, default=`Name`}"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@id/setting_profile"
+            app:layout_constraintTop_toTopOf="@id/setting_profile" />
+
         <TextView
             android:id="@+id/setting_user_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/setting_user_name"
-            app:layout_constraintLeft_toLeftOf="@id/setting_user_name"
-            android:textSize="11sp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/apple_sd_gothic_neo_r"
+            android:text="@{user.email, default = `email@email.com`}"
             android:textColor="#d8d8d8"
-            android:layout_marginTop="8dp"
-            android:text="@{settinguseremail,default = `whynxt@naver.com`}"
-            />
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@id/setting_user_name"
+            app:layout_constraintTop_toBottomOf="@id/setting_user_name" />
 
 
         <LinearLayout
             android:id="@+id/setting_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/setting_profile"
             android:layout_marginHorizontal="31dp"
             android:layout_marginTop="20dp"
-            android:weightSum="100"
             android:orientation="horizontal"
-            >
-                <Button
-                    android:id="@+id/change_photo"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="35"
-                    android:background="@drawable/round_box"
-                    android:elevation="3dp"
-                    android:text="사진변경"
-                    android:textSize="15sp"
-                    android:textColor="#9a9a9a"
-                    />
+            android:weightSum="100"
+            app:layout_constraintTop_toBottomOf="@id/setting_profile">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/change_photo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="35"
+                android:background="@drawable/round_box"
+                android:elevation="3dp"
+                android:fontFamily="@font/apple_sd_gothic_neo_r"
+                android:text="사진 변경"
+                android:textColor="#9a9a9a"
+                android:textSize="15sp" />
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="10"/>
+                android:layout_weight="5" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/reset_password"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="55"
                 android:background="@drawable/round_box"
-                android:text="비밀번호 재설정"
                 android:elevation="3dp"
-                android:textColor="#9a9a9a"/>
+                android:fontFamily="@font/apple_sd_gothic_neo_r"
+                android:text="비밀번호 재설정"
+                android:textColor="#9a9a9a" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/push_notification_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/setting_layout"
-            app:layout_constraintLeft_toLeftOf="@id/setting_layout"
-            android:text="푸쉬 알림"
-            android:textSize="26sp"
-            android:textColor="@color/colorPrimary"
             android:layout_marginTop="36dp"
+            android:text="푸쉬 알림"
+            android:textColor="@color/colorPrimary"
+            android:textSize="26sp"
             android:textStyle="bold"
-            />
+            app:layout_constraintStart_toStartOf="@id/setting_layout"
+            app:layout_constraintTop_toBottomOf="@id/setting_layout" />
 
         <Switch
             android:id="@+id/push_notification_check"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            app:layout_constraintLeft_toRightOf="@id/push_notification_tv"
-            app:layout_constraintTop_toTopOf="@id/push_notification_tv"
-            app:layout_constraintBottom_toBottomOf="@id/push_notification_tv"
-            android:track="@drawable/switch_track_selector"
-            android:thumb="@drawable/switch_thumb"
-            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
             android:checked="true"
-            />
+            android:thumb="@drawable/switch_thumb"
+            android:track="@drawable/switch_track_selector"
+            app:layout_constraintBottom_toBottomOf="@id/push_notification_tv"
+            app:layout_constraintStart_toEndOf="@id/push_notification_tv"
+            app:layout_constraintTop_toTopOf="@id/push_notification_tv" />
 
-        <TimePicker
-            android:id="@+id/time_picker"
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_main4_picker"
             android:layout_width="match_parent"
-            android:layout_height="104dp"
-            app:layout_constraintTop_toBottomOf="@id/push_notification_check"
+            android:layout_height="100dp"
             android:layout_marginHorizontal="33dp"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="20dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp"
+            app:layout_constraintTop_toBottomOf="@id/push_notification_check">
+
+            <TimePicker
+                android:id="@+id/time_picker"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/round_box"
+                android:scrollIndicators="none"
+                android:timePickerMode="spinner" />
+
+        </androidx.cardview.widget.CardView>
+
 
         <TextView
             android:id="@+id/setting_set_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/time_picker"
-            app:layout_constraintLeft_toLeftOf="@id/time_picker"
-            android:textStyle="bold"
-            android:textSize="26sp"
-            android:textColor="@color/colorPrimary"
+            android:layout_marginTop="20dp"
             android:text="계정 관리"
-            android:layout_marginTop="20dp"/>
+            android:textColor="@color/colorPrimary"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/card_main4_picker"
+            app:layout_constraintTop_toBottomOf="@id/card_main4_picker" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/setting_user_out"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/setting_set_tv"
-            app:layout_constraintLeft_toLeftOf="@id/setting_set_tv"
-            android:background="@drawable/round_box"
             android:layout_marginTop="12dp"
-            android:text="계정 탈퇴"
+            android:background="@drawable/round_box"
             android:elevation="3dp"
+            android:fontFamily="@font/apple_sd_gothic_neo_r"
             android:paddingHorizontal="32dp"
-            />
+            android:text="계정 탈퇴"
+            app:layout_constraintStart_toStartOf="@id/setting_set_tv"
+            app:layout_constraintTop_toBottomOf="@id/setting_set_tv" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/log_out"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/setting_set_tv"
-            app:layout_constraintLeft_toRightOf="@id/setting_user_out"
-            android:layout_marginLeft="12dp"
-            android:background="@drawable/round_box"
+            android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:background="@drawable/round_box"
+            android:elevation="3dp"
+            android:fontFamily="@font/apple_sd_gothic_neo_r"
+            android:paddingHorizontal="34dp"
             android:text="로그아웃"
             android:textColor="#c80707"
-            android:elevation="3dp"
-            android:paddingHorizontal="34dp"
-            />
-
+            app:layout_constraintStart_toEndOf="@id/setting_user_out"
+            app:layout_constraintTop_toBottomOf="@id/setting_set_tv" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

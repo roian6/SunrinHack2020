@@ -20,18 +20,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_main1"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:title="My Diary"
-            app:titleTextAppearance="@style/TitleBarTextAppearance"
-            app:titleTextColor="@color/materialDarkBlack" />
-
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_main1"
@@ -41,7 +29,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar_main1"
             tools:listitem="@layout/row_diary" />
 
 
