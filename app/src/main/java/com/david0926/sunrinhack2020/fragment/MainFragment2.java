@@ -4,23 +4,41 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import com.applandeo.materialcalendarview.EventDay;
+import com.applandeo.materialcalendarview.builders.DatePickerBuilder;
+import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
+import com.applandeo.materialcalendarview.listeners.OnSelectDateListener;
 import com.david0926.sunrinhack2020.R;
 import com.david0926.sunrinhack2020.databinding.FragmentMain2Binding;
 import com.david0926.sunrinhack2020.util.SharedPreferenceUtil;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
 public class MainFragment2 extends Fragment {
+    private CalendarView calendarView;
+    private Calendar calendar;
+    private int day;
+    private int month;
+    private int year;
 
     public static MainFragment2 newInstance() {
         return new MainFragment2();
@@ -42,43 +60,28 @@ public class MainFragment2 extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main2, container, false);
-        binding.setAlert(SharedPreferenceUtil.getInt(mContext, "alert", 0));
-        binding.setTime(SharedPreferenceUtil.getInt(mContext, "time", 0));
 
-        binding.btnMain2Share.setOnClickListener(view -> {
-            Intent sendIntent = new Intent();
-            sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT, "Wanna join SafePad? \n" +
-                    "https://github.com/roian6/SafePad");
-            sendIntent.setType("text/plain");
 
-            Intent shareIntent = Intent.createChooser(sendIntent, null);
-            startActivity(shareIntent);
+
+        binding.calendarView.setOnDayClickListener(new OnDayClickListener() {
+            @Override
+            public void onDayClick(EventDay eventDay) {
+                calendar = eventDay.getCalendar();
+
+//                day = calendar.get(Calendar.DAY_OF_MONTH);
+//                month = calendar.get(Calendar.MONTH)+1;
+//                year = calendar.get(Calendar.YEAR);
+
+                List<EventDay> events = new ArrayList<>();
+                events.add(new EventDay(calendar, R.drawable.ic_baseline_devices_24, Color.parseColor("#228B22")));
+                binding.calendarView.setEvents(events);
+
+            }
         });
 
-        broadcastReceiverAlert = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                String action = intent.getAction();
-                if (action != null && action.equals("main_alert")) {
-                    SharedPreferenceUtil.putInt(mContext, "alert",
-                            SharedPreferenceUtil.getInt(mContext, "alert", 0)+1);
-                    binding.setAlert(SharedPreferenceUtil.getInt(mContext, "alert", 0));
-                }
-            }
-        };
-        mContext.registerReceiver(broadcastReceiverAlert, new IntentFilter("main_alert"));
 
-        broadcastReceiverTime = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                String action = intent.getAction();
-                if (action != null && action.equals("main_time")) {
-                    binding.setTime(SharedPreferenceUtil.getInt(mContext, "time", 0));
-                }
-            }
-        };
-        mContext.registerReceiver(broadcastReceiverTime, new IntentFilter("main_time"));
+
+
 
         return binding.getRoot();
     }
