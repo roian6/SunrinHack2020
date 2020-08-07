@@ -5,13 +5,11 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CalendarView;
 import android.widget.CompoundButton;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -22,7 +20,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
-import com.david0926.sunrinhack2020.Alarm;
 import com.david0926.sunrinhack2020.LoginActivity;
 import com.david0926.sunrinhack2020.MainActivity;
 import com.david0926.sunrinhack2020.R;
@@ -34,8 +31,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Calendar;
 
 public class MainFragment4 extends Fragment {
     int hour;
@@ -66,23 +61,27 @@ public class MainFragment4 extends Fragment {
 
         binding.setUser(UserCache.getUser(mContext));
 
-        SharedPreferences pref = mContext.getSharedPreferences("alarm_time",Context.MODE_PRIVATE);
+        SharedPreferences pref = mContext.getSharedPreferences("alarm_time", Context.MODE_PRIVATE);
+        if(pref.getInt("alarm_time_hour_int",0)!=0){
+            binding.timePicker.setHour(pref.getInt("alarm_time_hour_int",0));
+            binding.timePicker.setMinute(pref.getInt("alarm_time_minute_int",0));
+        }
 
         binding.pushNotificationCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b){
+                if (b) {
 
-                    alarm_hour = pref.getInt("alarm_time_hour_int",0);
-                    alarm_minute = pref.getInt("alarm_time_minute_int",0);
+                    alarm_hour = pref.getInt("alarm_time_hour_int", 0);
+                    alarm_minute = pref.getInt("alarm_time_minute_int", 0);
                     Intent intent1 = new Intent(mContext, broadcast.class);
-                    intent1.putExtra("alarm_time_hour",alarm_hour+"");
-                    intent1.putExtra("alarm_time_minute",alarm_minute+"");
+                    intent1.putExtra("alarm_time_hour", alarm_hour + "");
+                    intent1.putExtra("alarm_time_minute", alarm_minute + "");
                     mContext.sendBroadcast(intent1);
 
-                }else{
+                } else {
                     Intent intent2 = new Intent(mContext, MainActivity.class);
-                    intent2.putExtra("check",0);
+                    intent2.putExtra("check", 0);
                     mContext.sendBroadcast(intent2);
 
                 }
@@ -94,21 +93,25 @@ public class MainFragment4 extends Fragment {
                 TimePickerDialog dialog = new TimePickerDialog(mContext, listener, hour, minute, false);
                 dialog.show();
             }
+
             TimePickerDialog.OnTimeSetListener listener = new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                    Log.e("asd",hourOfDay + "시 " + minute + "분");
+                    Log.e("asd", hourOfDay + "시 " + minute + "분");
                     SharedPreferences.Editor editor = pref.edit();
-                    editor.putString("alarm_time_hour",hourOfDay+"");
-                    editor.putString("alarm_time_minute",minute+"");
-                    editor.putInt("alarm_time_hour_int",hourOfDay);
-                    editor.putInt("alarm_time_minute_int",minute);
+                    editor.putString("alarm_time_hour", hourOfDay + "");
+                    editor.putString("alarm_time_minute", minute + "");
+                    editor.putInt("alarm_time_hour_int", hourOfDay);
+                    editor.putInt("alarm_time_minute_int", minute);
                     editor.commit();
+
+                    binding.timePicker.setHour(hourOfDay);
+                    binding.timePicker.setMinute(minute);
 
                     Intent intent1 = new Intent(mContext, broadcast.class);
 
-                    intent1.putExtra("alarm_time_hour",hourOfDay+"");
-                    intent1.putExtra("alarm_time_minute",minute+"");
+                    intent1.putExtra("alarm_time_hour", hourOfDay + "");
+                    intent1.putExtra("alarm_time_minute", minute + "");
                     mContext.sendBroadcast(intent1);
                 }
             };
@@ -124,19 +127,18 @@ public class MainFragment4 extends Fragment {
         binding.cardMain4Picker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("asd","asd");
+                Log.e("asd", "asd");
                 TimePickerDialog dialog = new TimePickerDialog(mContext, listener, hour, minute, false);
-               dialog.show();
+                dialog.show();
             }
+
             TimePickerDialog.OnTimeSetListener listener = new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                    Log.e("asd",hourOfDay + "시 " + minute + "분");
+                    Log.e("asd", hourOfDay + "시 " + minute + "분");
                 }
             };
         });
-
-
 
 
         binding.logOut.setOnClickListener(view -> {
