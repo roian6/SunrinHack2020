@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import com.david0926.sunrinhack2020.LoginActivity;
 import com.david0926.sunrinhack2020.R;
 import com.david0926.sunrinhack2020.databinding.FragmentMain4Binding;
+import com.david0926.sunrinhack2020.model.UserModel;
 import com.david0926.sunrinhack2020.util.UserCache;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -41,7 +42,14 @@ public class MainFragment4 extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main4, container, false);
 
-        binding.btnMain4Logout.setOnClickListener(view -> {
+        UserModel userModel = UserCache.getUser(mContext);
+        binding.setSettinguser(userModel);
+        binding.setSettingusername(userModel.getName());
+        binding.setSettinguseremail(userModel.getEmail());
+
+
+
+        binding.logOut.setOnClickListener(view -> {
             UserCache.clear(mContext);
             Activity activity = getActivity();
             if (activity == null) return;
