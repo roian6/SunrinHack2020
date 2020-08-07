@@ -17,11 +17,13 @@
         android:paddingBottom="4dp">
 
         <ImageView
+            android:paddingBottom="4dp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintHorizontal_bias="1.0"
             android:id="@+id/imageView4"
             android:layout_width="wrap_content"
             android:layout_height="240dp"
-            android:layout_marginBottom="4dp"
-            android:visibility="@{item.image!=null&amp;&amp;item.image.empty, default=gone}"
+            android:visibility="@{item.image!=null&amp;&amp;!item.image.empty, default=visible}"
             app:imageLink="@{item.image}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

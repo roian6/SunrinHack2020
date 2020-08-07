@@ -39,7 +39,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
-            app:title="AI"
+            app:title="일기 작성하기"
             app:titleTextAppearance="@style/TitleBarTextAppearance"
             app:titleTextColor="@color/materialDarkBlack" />
 
@@ -62,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="none"
-            android:visibility="@{!isChatting}"
+            android:visibility="@{!isChatting?2:1}"
             app:layout_constraintBottom_toTopOf="@+id/constraint_fab_bottom">
 
             <LinearLayout
@@ -164,6 +164,7 @@
                 android:background="@drawable/round_box_right"
                 android:backgroundTint="@color/materialGray1"
                 android:focusable="@{isChatting}"
+                android:focusableInTouchMode="@{isChatting}"
                 android:fontFamily="@font/apple_sd_gothic_neo_r"
                 android:hint="@{isChatting?@string/chat_chatting:@string/chat_not_chatting, default=`Aa`}"
                 android:padding="14dp"
@@ -189,7 +190,7 @@
                 android:padding="14dp"
                 android:text="전송"
                 android:textColor="@android:color/white"
-                app:buttonEnabled="@{isChatting}"
+                app:buttonEnabled="@{isChatting&amp;&amp;!message.empty}"
                 app:layout_constraintBottom_toBottomOf="@+id/edt_chat_message"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

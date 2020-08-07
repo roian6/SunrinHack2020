@@ -1,6 +1,9 @@
 package com.david0926.sunrinhack2020;
 
+import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -8,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
@@ -16,7 +20,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ObservableArrayList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.bumptech.glide.Glide;
 import com.david0926.sunrinhack2020.adapter.ChatAdapter;
 import com.david0926.sunrinhack2020.databinding.ActivityChatBinding;
 import com.david0926.sunrinhack2020.model.ChatModel;
@@ -25,12 +28,13 @@ import com.david0926.sunrinhack2020.util.LinearLayoutManagerWrapper;
 import com.david0926.sunrinhack2020.util.UserCache;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -43,6 +47,11 @@ public class ChatActivity extends AppCompatActivity {
 
     private ObservableArrayList<ChatModel> chatItems = new ObservableArrayList<>();
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+
+    private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+    private StorageReference storageReference = firebaseStorage.getReference();
+
+    private BroadcastReceiver broadcastReceiver;
 
     private ActivityChatBinding binding;
 
@@ -70,7 +79,7 @@ public class ChatActivity extends AppCompatActivity {
 
         //scroll to bottom when keyboard up
         new TedKeyboardObserver(this).listen(isShow -> {
-            binding.recyclerChat.smoothScrollToPosition(chatItems.size()-1);
+            binding.recyclerChat.smoothScrollToPosition(chatItems.size() - 1);
         });
 
         refreshChat();
@@ -86,27 +95,31 @@ public class ChatActivity extends AppCompatActivity {
                 return;
             }
 
-            Map<String, Object> map = new HashMap<>();
+            hideKeyboard(this);
+            binding.setIsChatting(false);
+
+            HashMap<String, String> map = new HashMap<>();
             map.put("author", UserCache.getUser(this).getName());
             map.put("text", binding.getMessage());
             map.put("time", timeNow());
-            map.put("image", binding.getImageUri().isEmpty()?"":binding.getImageUri());
 
+            if (!binding.getImageUri().isEmpty()) {
+                //1. firebase storage (upload profile image)
+                storageReference
+                        .child("image/" + UserCache.getUser(this).getEmail() + map.get("time") + ".png")
+                        .putFile(Uri.parse(binding.getImageUri()))
+                        .addOnSuccessListener(runnable -> {
 
-            firebaseFirestore
-                    .collection("users")
-                    .document(UserCache.getUser(this).getEmail())
-                    .update("chat", FieldValue.arrayUnion(map))
-                    .addOnSuccessListener(runnable -> {
-                        binding.setIsChatting(false);
-                        Gson gson = new Gson();
-                        JsonElement e = gson.toJsonTree(map);
-                        ChatModel model = gson.fromJson(e, ChatModel.class);
-                        chatItems.add(model);
-                        binding.setMessage("");
-                        binding.horizontalScrollView.setVisibility(View.VISIBLE);
-                        binding.recyclerChat.smoothScrollToPosition(chatItems.size()-1);
-                    });
+                            //2. get profile url
+                            storageReference.child("image/" + UserCache.getUser(this).getEmail() + map.get("time") + ".png")
+                                    .getDownloadUrl()
+                                    .addOnSuccessListener(uri -> {
+                                        map.put("image", uri.toString());
+                                        uploadChat(map);
+                                    });
+
+                        });
+            } else uploadChat(map);
         });
 
         binding.btnChatImage.setOnClickListener(view -> {
@@ -119,12 +132,13 @@ public class ChatActivity extends AppCompatActivity {
                     .start(uri -> {
                         if (getMimeType(uri).equals("image/jpeg") || getMimeType(uri).equals("image/png")) {
                             binding.setImageUri(uri.toString());
-                        } else Toast.makeText(this, "Please upload valid profile image. (jpeg, png)", Toast.LENGTH_SHORT).show();
+                        } else
+                            Toast.makeText(this, "Please upload valid profile image. (jpeg, png)", Toast.LENGTH_SHORT).show();
                     });
         });
     }
 
-    private void aiSays(String text){
+    private void aiSays(String text) {
         Map<String, Object> map = new HashMap<>();
         map.put("author", "AI");
         map.put("text", text);
@@ -140,7 +154,25 @@ public class ChatActivity extends AppCompatActivity {
                     JsonElement e = gson.toJsonTree(map);
                     ChatModel model = gson.fromJson(e, ChatModel.class);
                     chatItems.add(model);
-                    binding.recyclerChat.smoothScrollToPosition(chatItems.size()-1);
+                    binding.recyclerChat.smoothScrollToPosition(chatItems.size() - 1);
+                });
+    }
+
+    private void uploadChat(HashMap<String, String> map) {
+        firebaseFirestore
+                .collection("users")
+                .document(UserCache.getUser(this).getEmail())
+                .update("chat", FieldValue.arrayUnion(map))
+                .addOnSuccessListener(runnable -> {
+                    binding.setIsChatting(false);
+                    Gson gson = new Gson();
+                    JsonElement e = gson.toJsonTree(map);
+                    ChatModel model = gson.fromJson(e, ChatModel.class);
+                    chatItems.add(model);
+                    binding.setMessage("");
+                    binding.setImageUri("");
+                    binding.horizontalScrollView.setVisibility(View.VISIBLE);
+                    binding.recyclerChat.smoothScrollToPosition(chatItems.size() - 1);
                 });
     }
 
@@ -152,8 +184,11 @@ public class ChatActivity extends AppCompatActivity {
                 .get()
                 .addOnSuccessListener(runnable -> {
                     chatItems.addAll(runnable.toObject(UserModel.class).getChat());
-                    binding.recyclerChat.smoothScrollToPosition(chatItems.size()-1);
-                    binding.setIsChatting(chatItems.get(chatItems.size()-1).getAuthor().equals("AI"));
+                    if(chatItems.size()>0) {
+                        binding.recyclerChat.smoothScrollToPosition(chatItems.size() - 1);
+                        binding.setIsChatting(chatItems.get(chatItems.size() - 1).getAuthor().equals("AI"));
+                    }
+
                     //Collections.reverse(chatItems);
                 });
     }
@@ -177,12 +212,12 @@ public class ChatActivity extends AppCompatActivity {
         return mimeType;
     }
 
-    private byte[] imageToByte(Drawable drawable) {
-
-        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 10, outputStream);
-
-        return outputStream.toByteArray();
+    private void hideKeyboard(Activity activity) {
+        View v = activity.getCurrentFocus();
+        if (v != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm != null) imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        }
     }
+
 }

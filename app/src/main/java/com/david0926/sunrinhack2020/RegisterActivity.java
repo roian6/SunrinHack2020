@@ -82,7 +82,7 @@ public class RegisterActivity extends AppCompatActivity {
             hideKeyboard(this);
 
             if (TextUtils.isEmpty(binding.getName()) || TextUtils.isEmpty(binding.getEmail())
-                    || TextUtils.isEmpty(binding.getPw()) || TextUtils.isEmpty(binding.getPwcheck())) //empty field
+                    || TextUtils.isEmpty(binding.getPw())) //empty field
                 showErrorMsg("Please fill all required fields.");
 
             else if (!isValidEmail(binding.getEmail())) //invalid email
@@ -142,12 +142,11 @@ public class RegisterActivity extends AppCompatActivity {
         sendBroadcast(new Intent("finish_signup"));
 
         binding.animatorRegi.showNext();
-        binding.lottieRegiFinish.playAnimation();
 
         new Handler().postDelayed(() -> {
             startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
             finish();
-        }, binding.lottieRegiFinish.getDuration() + 1000);
+        }, 1500);
     }
 
     private void showErrorMsg(String msg) {
