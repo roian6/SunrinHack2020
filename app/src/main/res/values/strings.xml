@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">SunrinHack</string>
+    <string name="asd">1001</string>
+    <string name="description">10001</string>
 
     <string name="material_calendar_monday">월</string>
     <string name="material_calendar_tuesday">화</string>
