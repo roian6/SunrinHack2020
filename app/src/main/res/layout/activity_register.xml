@@ -61,7 +61,7 @@
                     app:title="" />
 
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/regi_profile"
                     android:layout_width="96dp"
                     android:layout_height="96dp"
@@ -105,11 +105,11 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:fontFamily="@font/apple_sd_gothic_neo_h"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
-                        android:text="NAME"
+                        android:fontFamily="@font/apple_sd_gothic_neo_h"
+                        android:text="이름"
                         android:textColor="@color/colorPrimary"
                         app:layout_constraintBottom_toBottomOf="@id/edit_regi_name"
                         app:layout_constraintStart_toStartOf="@id/edit_regi_name"
@@ -138,11 +138,11 @@
                         app:layout_constraintTop_toBottomOf="@+id/edit_regi_name" />
 
                     <TextView
-                        android:fontFamily="@font/apple_sd_gothic_neo_h"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
-                        android:text="E-MAIL"
+                        android:fontFamily="@font/apple_sd_gothic_neo_h"
+                        android:text="이메일"
                         android:textColor="@color/colorPrimary"
                         app:layout_constraintBottom_toBottomOf="@id/edit_regi_email"
                         app:layout_constraintStart_toStartOf="@id/edit_regi_email"
@@ -169,11 +169,11 @@
                         app:layout_constraintTop_toBottomOf="@+id/edit_regi_email" />
 
                     <TextView
-                        android:fontFamily="@font/apple_sd_gothic_neo_h"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
-                        android:text="PW"
+                        android:fontFamily="@font/apple_sd_gothic_neo_h"
+                        android:text="비밀번호"
                         android:textColor="@color/colorPrimary"
                         app:layout_constraintBottom_toBottomOf="@id/edit_regi_pw"
                         app:layout_constraintStart_toStartOf="@id/edit_regi_pw"
