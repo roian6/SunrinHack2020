@@ -24,6 +24,10 @@
         <variable
             name="imageUri"
             type="String" />
+
+        <variable
+            name="view"
+            type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -62,7 +66,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="none"
-            android:visibility="@{!isChatting?2:1}"
+            android:visibility="@{!isChatting?view.VISIBLE:view.INVISIBLE}"
             app:layout_constraintBottom_toTopOf="@+id/constraint_fab_bottom">
 
             <LinearLayout

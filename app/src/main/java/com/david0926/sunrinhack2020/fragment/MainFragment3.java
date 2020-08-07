@@ -51,14 +51,14 @@ public class MainFragment3 extends Fragment {
         int a = userModel.getChat().size() / 2;
 
         now_day = a + "";
-        binding.setNowduringday(now_day + "편 작성했어요");
+        binding.setNowduringday(now_day + "편 작성했어요.");
 
         long now = System.currentTimeMillis();
         Date mDate = new Date(now);
         SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
         String getTime = simpleDate.format(mDate);
         during_day = calDateBetweenAandB(getTime, userModel.getTime());
-        binding.setDuringdaytext(during_day + "일째");
+        binding.setDuringdaytext(during_day + "일이 되었어요.");
 
         binding.setDuringday(userModel.getTime());
 

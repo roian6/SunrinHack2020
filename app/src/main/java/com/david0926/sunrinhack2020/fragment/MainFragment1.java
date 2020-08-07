@@ -16,16 +16,25 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.david0926.sunrinhack2020.R;
 import com.david0926.sunrinhack2020.adapter.DiaryAdapter;
 import com.david0926.sunrinhack2020.databinding.FragmentMain1Binding;
+import com.david0926.sunrinhack2020.model.ChatModel;
 import com.david0926.sunrinhack2020.model.DiaryModel;
+import com.david0926.sunrinhack2020.model.UserModel;
 import com.david0926.sunrinhack2020.util.LinearLayoutManagerWrapper;
+import com.david0926.sunrinhack2020.util.UserCache;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.platforminfo.DefaultUserAgentPublisher;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 
 public class MainFragment1 extends Fragment {
 
     public static MainFragment1 newInstance() {
         return new MainFragment1();
     }
+
+    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
     private Context mContext;
     private ObservableArrayList<DiaryModel> diaryItems = new ObservableArrayList<>();
@@ -54,24 +63,38 @@ public class MainFragment1 extends Fragment {
         binding.recyclerMain1.setAdapter(adapter);
         binding.setDiaryList(diaryItems);
 
-        DiaryModel model = new DiaryModel();
-        model.setQuestion("밥?");
-        model.setAnswer("ㅇㅇ");
-        model.setTime("2020/08/08 12:00:00");
-
-        diaryItems.add(model);
-
-        DiaryModel model2 = new DiaryModel();
-        model2.setQuestion("밥2?");
-        model2.setAnswer("ㅇㅇ2");
-        model2.setTime("2020/08/08 12:00:00");
-
-        diaryItems.add(model2);
-
         adapter.setOnItemClickListener((view, item) -> {
         });
         adapter.setOnItemLongClickListener((view, item) -> true);
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        refresh();
+    }
+
+    private void refresh(){
+        diaryItems.clear();
+        firebaseFirestore
+                .collection("users")
+                .document(UserCache.getUser(mContext).getEmail())
+                .get()
+                .addOnSuccessListener(runnable -> {
+                    ArrayList<ChatModel> chatList = runnable.toObject(UserModel.class).getChat();
+                    if (chatList.isEmpty()) return;
+
+                    for(int i=0;i<chatList.size()-1;i+=2){
+                        DiaryModel model = new DiaryModel();
+                        model.setQuestion(chatList.get(i).getText());
+                        model.setAnswer(chatList.get(i+1).getText());
+                        model.setTime(chatList.get(i+1).getTime());
+                        model.setImage(chatList.get(i+1).getImage());
+                        diaryItems.add(model);
+                    }
+
+                });
     }
 }
