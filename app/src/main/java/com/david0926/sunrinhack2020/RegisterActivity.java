@@ -64,7 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
         //profile edit button clicked
-        binding.imgRegiEditprofile.setOnClickListener(view -> {
+        binding.regiProfile.setOnClickListener(view -> {
 
             //start image picker
             TedImagePicker
@@ -91,11 +91,11 @@ public class RegisterActivity extends AppCompatActivity {
             else if (!isValidPw(binding.getPw())) //invalid password
                 showErrorMsg("Please enter a valid password. (6~24 letters, 0-9 + A-z)");
 
-            else if (binding.imgRegiProfile.getDrawable() == null) //profile image not uploaded
+            else if (binding.regiProfile.getDrawable() == null) //profile image not uploaded
                 showErrorMsg("Please upload your profile image.");
 
             else //confirm success
-                createAccount(imageToByte(binding.imgRegiProfile.getDrawable()), binding.getName(), binding.getEmail(), binding.getPw());
+                createAccount(imageToByte(binding.regiProfile.getDrawable()), binding.getName(), binding.getEmail(), binding.getPw());
 
         });
 
@@ -183,7 +183,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void setProfileImage(Uri uri) {
         if (getMimeType(uri).equals("image/jpeg") || getMimeType(uri).equals("image/png")) {
-            Glide.with(this).load(uri).into(binding.imgRegiProfile);
+            Glide.with(this).load(uri).into(binding.regiProfile);
         } else showErrorMsg("Please upload valid profile image. (jpeg, png)");
     }
 
