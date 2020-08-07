@@ -69,6 +69,12 @@ public class MainFragment2 extends Fragment {
             events.add(new EventDay(calendar, R.drawable.ic_baseline_devices_24, Color.parseColor("#228B22")));
             binding.calendarView.setEvents(events);
 
+
+
+
+
+
+
         });
 
         return binding.getRoot();
