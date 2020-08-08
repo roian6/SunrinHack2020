@@ -32,12 +32,12 @@ public class LandingActivity extends AppIntro {
         setIndicatorColor(getColor(R.color.colorPrimary), getColor(R.color.materialGray5));
         setImageNextButton(getDrawable(R.drawable.ic_navigate_next_primary_24dp));
         setColorTransitionsEnabled(true);
-        setSkipText("Skip");
+        setSkipText("건너뛰기");
         setColorSkipButton(getColor(R.color.colorPrimary));
-        setSkipTextTypeface(R.font.productb);
-        setDoneText("Get Started");
+        setSkipTextTypeface(R.font.apple_sd_gothic_neo_h);
+        setDoneText("시작하기");
         setColorDoneText(getColor(R.color.colorPrimary));
-        setDoneTextTypeface(R.font.productb);
+        setDoneTextTypeface(R.font.apple_sd_gothic_neo_h);
 
     }
 

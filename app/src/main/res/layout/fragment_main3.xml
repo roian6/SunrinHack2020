@@ -174,10 +174,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/apple_sd_gothic_neo_h"
-                android:text="지난 달에는 일기를"
+                android:text="이번 달에는 일기를"
                 android:textColor="#9a9a9a"
                 android:textSize="16sp"
-                android:textStyle="bold"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

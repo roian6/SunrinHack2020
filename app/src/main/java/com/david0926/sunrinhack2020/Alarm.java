@@ -2,15 +2,15 @@ package com.david0926.sunrinhack2020;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.util.Log;
-import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.app.TaskStackBuilder;
 
 public class Alarm extends BroadcastReceiver {
     @Override
@@ -24,15 +24,20 @@ public class Alarm extends BroadcastReceiver {
 
         //asd
 
+        Intent resultIntent = new Intent(context, MainActivity.class);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        stackBuilder.addNextIntentWithParentStack(resultIntent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "asd")
-                .setSmallIcon(R.drawable.ic_arrow_back_black_24dp)
-                .setContentTitle("My notification")
-                .setContentText("Much longer text that cannot fit one line...")
+                .setSmallIcon(R.drawable.logo)
+                .setContentTitle("일기 알림")
+                .setContentText("일기를 작성할 시간이에요! 알림을 클릭하여 대화를 시작해 보세요.")
                 .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText("Much longer text that cannot fit one line..."))
+                        .bigText("일기를 작성할 시간이에요! 알림을 클릭하여 대화를 시작해 보세요."))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
+        builder.setContentIntent(resultPendingIntent);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 

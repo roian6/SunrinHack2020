@@ -13,13 +13,16 @@ import androidx.fragment.app.Fragment;
 
 import com.david0926.sunrinhack2020.R;
 import com.david0926.sunrinhack2020.databinding.FragmentMain3Binding;
+import com.david0926.sunrinhack2020.model.ChatModel;
 import com.david0926.sunrinhack2020.model.UserModel;
 import com.david0926.sunrinhack2020.util.UserCache;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -31,8 +34,10 @@ public class MainFragment3 extends Fragment {
 
     private Context mContext;
     private FragmentMain3Binding binding;
-    String during_day;
-    String now_day;
+    private String during_day;
+    private String now_day;
+
+    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
     @Override
     public void onAttach(@NotNull Context context) {
@@ -48,17 +53,21 @@ public class MainFragment3 extends Fragment {
         UserModel userModel = UserCache.getUser(mContext);
         binding.setUser(userModel);
 
-        int a = userModel.getChat().size() / 2;
-
-        now_day = a + "";
-        binding.setNowduringday(now_day + "편 작성했어요.");
+        firebaseFirestore
+                .collection("users")
+                .document(UserCache.getUser(mContext).getEmail())
+                .get()
+                .addOnSuccessListener(runnable -> {
+                    ArrayList<ChatModel> chatList = runnable.toObject(UserModel.class).getChat();
+                    binding.setNowduringday(chatList.size() / 2 + "편 작성했어요.");
+                });
 
         long now = System.currentTimeMillis();
         Date mDate = new Date(now);
         SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
         String getTime = simpleDate.format(mDate);
         during_day = calDateBetweenAandB(getTime, userModel.getTime());
-        binding.setDuringdaytext(during_day + "일이 되었어요.");
+        binding.setDuringdaytext(during_day + "일이 지났어요.");
 
         binding.setDuringday(userModel.getTime());
 

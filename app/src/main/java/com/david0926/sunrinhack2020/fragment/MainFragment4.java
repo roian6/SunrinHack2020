@@ -58,13 +58,13 @@ public class MainFragment4 extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main4, container, false);
-
+        binding.pushNotificationCheck.setChecked(true);
         binding.setUser(UserCache.getUser(mContext));
 
         SharedPreferences pref = mContext.getSharedPreferences("alarm_time", Context.MODE_PRIVATE);
-        if(pref.getInt("alarm_time_hour_int",0)!=0){
-            binding.timePicker.setHour(pref.getInt("alarm_time_hour_int",0));
-            binding.timePicker.setMinute(pref.getInt("alarm_time_minute_int",0));
+        if (pref.getInt("alarm_time_hour_int", 0) != 0) {
+            binding.timePicker.setHour(pref.getInt("alarm_time_hour_int", 0));
+            binding.timePicker.setMinute(pref.getInt("alarm_time_minute_int", 0));
         }
 
         binding.pushNotificationCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

@@ -167,7 +167,7 @@
             android:id="@+id/button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/round_box_10"
             android:backgroundTint="@color/colorPrimary"
             android:fontFamily="@font/apple_sd_gothic_neo_h"
