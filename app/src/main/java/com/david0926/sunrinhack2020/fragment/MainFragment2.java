@@ -3,12 +3,10 @@ package com.david0926.sunrinhack2020.fragment;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -60,17 +58,26 @@ public class MainFragment2 extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main2, container, false);
 
-        binding.calendarView.setOnDayClickListener(eventDay -> {
-            calendar = eventDay.getCalendar();
-
-//                day = calendar.get(Calendar.DAY_OF_MONTH);
-//                month = calendar.get(Calendar.MONTH)+1;
-//                year = calendar.get(Calendar.YEAR);
-
-            List<EventDay> events = new ArrayList<>();
-            events.add(new EventDay(calendar, R.drawable.ic_baseline_devices_24, Color.parseColor("#228B22")));
-            binding.calendarView.setEvents(events);
-        });
+        List<EventDay> events = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(2020, 7, 5 + i);
+            events.add(new EventDay(calendar, R.drawable.ic_baseline_check_24, Color.parseColor("#4f98ff")));
+        }
+        binding.calendarView.setEvents(events);
+//
+//
+//        binding.calendarView.setOnDayClickListener(eventDay -> {
+//            calendar = eventDay.getCalendar();
+//
+////                day = calendar.get(Calendar.DAY_OF_MONTH);
+////                month = calendar.get(Calendar.MONTH)+1;
+////                year = calendar.get(Calendar.YEAR);
+//
+//            List<EventDay> events = new ArrayList<>();
+//            events.add(new EventDay(calendar, R.drawable.ic_baseline_devices_24, Color.parseColor("#228B22")));
+//            binding.calendarView.setEvents(events);
+//        });
 
         firebaseFirestore
                 .collection("users")
@@ -91,7 +98,7 @@ public class MainFragment2 extends Fragment {
 
                     for (DiaryModel m : diaryItems) {
                         String date = m.getTime().split(" ")[0]; //HH/mm/ss
-                        if(!dates.contains(date)) dates.add(date);
+                        if (!dates.contains(date)) dates.add(date);
                     }
                 });
 

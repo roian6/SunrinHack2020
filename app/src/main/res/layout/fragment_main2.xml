@@ -30,7 +30,8 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:selectionColor="#1E88E5" />
+            app:selectionColor="#1E88E5"
+            app:type="many_days_picker" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
